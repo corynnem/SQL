@@ -89,34 +89,5 @@ usercontroller.post("/login", async (req, res) => {
  
 });
 
-usercontroller.get("/all", async (req, res) => {
-  const resolved = (data) => {
-    res.status(200).json({
-      message: "data retrieved sucessfully",
-      data,
-    });
-  };
-  const rejected = (message) => {
-    res.status(401).json({
-      message,
-    });
-  };
-  try {
-    const query = {
-      text: "SELECT * from users",
-    };
-
-    pool.query(query, (err, res) => {
-      if (err) {
-        rejected(err.stack)
-      } else {
-        resolved(res.rows);
-      }
-    });
-  } catch (e) {
-    rejected(e);
-  }
-
-});
 
 module.exports = usercontroller;
