@@ -1,2 +1,4 @@
 env/
 node_modules/*
+
+A node-postgres and express database using raw SQL queries. The database itself is for bookkeeping, containing a users and books table.
