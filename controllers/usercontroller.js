@@ -2,9 +2,7 @@ const Router = require("express");
 const { pool } = require("../db");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-// create a new express-promise-router
-// this has the same API as the normal express router except
-// it allows you to use async functions as route handlers
+
 const usercontroller = new Router();
 const { User } = require('../tables/tables')
 

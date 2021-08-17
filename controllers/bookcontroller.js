@@ -10,8 +10,6 @@ Book()
 
 
 
-
-
 bookcontroller.post("/new-book", validate,  async (req, res) => {
   const { name, snippet, deweyDecimal, review } = req.body;
 
