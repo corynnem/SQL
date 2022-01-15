@@ -1,9 +1,12 @@
 const { Pool } = require('pg')
 const fs = require('fs')
 const config = {
-  connectionString: `postgres://postgres:${process.env.PASS}@localhost:5432/mydb`,
+  connectionString: `postgres://postgres:${process.env.PASS}@localhost:5432/mydb?sslmode=require`,
   dialect: 'postgres',
-  ssl: process.env.ENVIRONMENT === 'production'
+  ssl: {
+    rejectUnauthorized: false,
+    ca: fs.readFileSync('/path/to/server-certificates/root.crt').toString(),
+  },
 }
 
 // Pooling allows for a reusable 'pool' of clients to be checked out, used and returned in less time
