@@ -32,11 +32,11 @@ bookcontroller.post("/new-book", validate,  async (req, res) => {
         rejected(err);
       } else {
         let lastRow = res.rows[res.rows.length - 1];
-        getId(lastRow !== undefined ? lastRow : { id: 0 });
+        sendBooks(lastRow !== undefined ? lastRow : { id: 0 });
       }
     });
 
-    const getId = (idObj) => {
+    const sendBooks = (idObj) => {
       let id = (idObj.id += 1);
       const query = {
         text: "INSERT INTO books(id, name, snippet, deweyDecimal, review, userId) VALUES($1, $2, $3, $4, $5, $6)",
@@ -52,7 +52,7 @@ bookcontroller.post("/new-book", validate,  async (req, res) => {
       });
     };
   } catch (err) {
-    rejected(err);
+    console.log(err);
   }
 });
 
@@ -79,11 +79,12 @@ bookcontroller.route('/:id')
   };
   try {
     const query = {
-      text: "SELECT * from books WHERE id = $1",
-      values: [req.params.id]
+      text: "SELECT * from books WHERE id = $1 AND userId=$2",
+      values: [req.params.id, req.user.id]
     };
 
     pool.query(query, (err, res) => {
+      console.log(res)
       if (err || res.rows[0] === undefined) {
         rejected(err)
       } else {
@@ -95,7 +96,6 @@ bookcontroller.route('/:id')
   }
 })
 .put(validate, async (req, res) => {
-  
   const { name, snippet, deweyDecimal, review } = req.body;
   const resolved = () => {
     res.status(200).json({
@@ -105,23 +105,27 @@ bookcontroller.route('/:id')
   const rejected = (message) => {
     message === undefined ?
     res.status(401).json({
-      message: "books could not be updated",
-    }) 
+      message: "book not found or could not be updated",
+    })
     : 
     res.status(401).json({
       message: message.stack
     })
   };
   try {
+
     const query = {
-      text: "UPDATE books SET name=$1, snippet=$2, deweyDecimal=$3, review=$4",
-      values: [name, snippet, deweyDecimal, review]
+      text: "UPDATE books SET name=$1, snippet=$2, deweyDecimal=$3, review=$4 WHERE userId=$5 AND id=$6",
+      values: [name, snippet, deweyDecimal, review, req.user.id, req.params.id]
     };
+    console.log(req.user.id, req.params.id)
     pool.query(query, (err, res) => {
       if (err) {
         rejected(err)
       } else {
-        resolved()
+        res.rowCount > 0 ? resolved() : rejected(undefined)
+        
+       
       }
     });
   } catch (e) {
@@ -137,20 +141,22 @@ bookcontroller.route('/:id')
   };
   const rejected = () => {
     res.status(401).json({
-      message: "books could not be deleted",
+      message: "book could not be deleted",
     }) 
   };
   try {
     const query = {
-      text: 'DELETE FROM books WHERE id=$1',
-      values: [req.params.id]
+      text: 'DELETE FROM books WHERE id=$1 and userId=$2',
+      values: [req.params.id, req.user.id]
     }
-  pool.query(query, (err, res) => err ? rejected() : resolved())
+
+  pool.query(query, (err, res) => {
+    console.log(res)
+    return err  ?  rejected() : res.rowCount > 0 ? resolved() : rejected()
+  })
     
-  } catch (e) {
-    res.status(500).json({
-      message: "failed to remove employee",
-    });
+  } catch {
+   rejected()
   }
 });
 

@@ -28,15 +28,15 @@ usercontroller.post("/register", async (req, res) => {
         console.log(err);
       } else {
         let lastRow = res.rows[res.rows.length - 1];
-        getId(lastRow !== undefined ? lastRow : { id: 0 });
+        register(lastRow !== undefined ? lastRow : { id: 0 });
       }
     });
 
-    const getId = (idObj) => {
+    const register = (idObj) => {
       let id = (idObj.id += 1);
       const query = {
         text: "INSERT INTO users(id, firstName, lastName, email, password) VALUES($1, $2, $3, $4, $5)",
-        values: [id, firstName, lastName, email, password],
+        values: [id, firstName, lastName, email, password]
       };
 
       pool.query(query, (err, res) => {
@@ -73,7 +73,7 @@ usercontroller.post("/login", async (req, res) => {
       values: [email],
     };
 
-    let loggingIn = pool.query(query, (err, res) => {
+   pool.query(query, (err, res) => {
       if (bcrypt.compare(password, res.rows[0].password)) {
         const token = jwt.sign({ id: res.rows[0].id }, process.env.JWT_SECRET);
         resolved(token);
@@ -81,7 +81,7 @@ usercontroller.post("/login", async (req, res) => {
         rejected(err);
       }
     });
-    return loggingIn;
+
   } catch (err) {
     rejected(err);
   }
