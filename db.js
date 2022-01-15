@@ -1,6 +1,6 @@
 const { Pool } = require('pg')
 const config = {
-  connectionString: `postgres://postgres:${process.env.PASS}@localhost:5432/mydb`,
+  connectionString: `postgres://postgres:${process.env.PASS}@localhost:5432/mydb?sslmode=require`,
   ssl: process.env.ENVIRONMENT === 'production'
 }
 
