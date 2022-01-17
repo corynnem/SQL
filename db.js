@@ -1,19 +1,14 @@
-const { Client, Pool } = require('pg')
-const { parseSsl } = require('pg-ssl')
-
-let pool = new Pool({
-  user: "postgres",
-  password: process.env.PASS,
-  database: "mydb",
-  port: 5432,
-  host: "localhost",
-  ssl: true
-});
-// client.connect(function () {
-//   console.log("connected");
-// });
+const { Pool } = require('pg')
+const fs = require('fs')
+const config = {
+  connectionString: `postgres://postgres:${process.env.PASS}@localhost:5432/mydb?sslmode=require`,
+  dialect: 'postgres',
+  ssl: {
+    rejectUnauthorized: false
+  }
+}
 
 // Pooling allows for a reusable 'pool' of clients to be checked out, used and returned in less time
-const client = new Pool(pool)
+const pool = new Pool(config)
 
-module.exports = { client }
+module.exports = { pool }
