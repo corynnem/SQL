@@ -1,4 +1,4 @@
-const { Pool } = require('pg')
+const { Client } = require('pg')
 const { parseSsl } = require('pg-ssl')
 
 let client = new Client({
