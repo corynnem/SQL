@@ -18,6 +18,7 @@
     "nodemon": "^2.0.12",
     "pg": "^8.7.1",
     "pg-hstore": "^2.3.4",
+    "pg-ssl": "0.0.1",
     "swagger": "^0.7.5",
     "swagger-jsdoc": "^6.1.0",
     "swagger-ui-express": "^4.3.0"
