@@ -7,7 +7,7 @@ let pool = new Pool({
   database: "mydb",
   port: 5432,
   host: "localhost",
-  ssl: process.env.ENVIROMENT === 'production' ? true : false
+  ssl: true
 });
 // client.connect(function () {
 //   console.log("connected");
