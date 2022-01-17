@@ -14,6 +14,6 @@ client.connect(function () {
 });
 
 // Pooling allows for a reusable 'pool' of clients to be checked out, used and returned in less time
-const pool = new Pool(config)
+// const pool = new Pool(config)
 
-module.exports = { pool }
+module.exports = { client }
