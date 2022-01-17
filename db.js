@@ -2,7 +2,7 @@ const { Pool } = require('pg')
 const fs = require('fs')
 const config = {
   connectionString: `postgres://postgres:${process.env.PASS}@localhost:5432/mydb?sslmode=require`,
-  dialect: 'postgres',
+  // dialect: 'postgres',
   ssl: {
     rejectUnauthorized: false
   }
