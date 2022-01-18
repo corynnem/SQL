@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const { client } = require('../db')
+const { pool } = require('../db')
 
 const validate = (req, res, next) => {
   if (req.method === 'OPTIONS') {
@@ -13,7 +13,7 @@ const validate = (req, res, next) => {
             values: [payload.id]
         }
 
-        client.query(query).then(user => {
+        pool.query(query).then(user => {
         req.user = user.rows[0];
         next();
       })

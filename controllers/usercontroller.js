@@ -1,5 +1,5 @@
 const Router = require("express");
-const { client } = require("../db");
+const { pool } = require("../db");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
@@ -23,7 +23,7 @@ usercontroller.post("/register", async (req, res) => {
   };
 
   try {
-    client.query("SELECT id FROM users", (err, res) => {
+    pool.query("SELECT id FROM users", (err, res) => {
       if (err) {
         console.log(err);
       } else {
@@ -39,7 +39,7 @@ usercontroller.post("/register", async (req, res) => {
         values: [id, firstName, lastName, email, password]
       };
 
-      client.query(query, (err, res) => {
+      pool.query(query, (err, res) => {
         if (err) {
           rejected(err.stack);
         } else {
@@ -73,7 +73,7 @@ usercontroller.post("/login", async (req, res) => {
       values: [email],
     };
 
-   client.query(query, (err, res) => {
+   pool.query(query, (err, res) => {
       if (bcrypt.compare(password, res.rows[0].password)) {
         const token = jwt.sign({ id: res.rows[0].id }, process.env.JWT_SECRET);
         resolved(token);

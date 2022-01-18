@@ -1,5 +1,5 @@
 const Router = require("express");
-const { client } = require("../db");
+const { pool } = require("../db");
 const{ validate }= require('../middlewares')
 
 const bookcontroller = new Router();
@@ -27,7 +27,7 @@ bookcontroller.post("/new-book", validate,  async (req, res) => {
   };
 
   try {
-    client.query("SELECT id FROM books", (err, res) => {
+    pool.query("SELECT id FROM books", (err, res) => {
       if (err) {
         rejected(err);
       } else {
@@ -43,7 +43,7 @@ bookcontroller.post("/new-book", validate,  async (req, res) => {
         values: [id, name, snippet, deweyDecimal, review, req.user.id],
       };
 
-      client.query(query, (err, res) => {
+      pool.query(query, (err, res) => {
         if (err) {
           rejected(err.stack);
         } else {
@@ -83,7 +83,7 @@ bookcontroller.route('/:id')
       values: [req.params.id, req.user.id]
     };
 
-    client.query(query, (err, res) => {
+    pool.query(query, (err, res) => {
       console.log(res)
       if (err || res.rows[0] === undefined) {
         rejected(err)
@@ -119,7 +119,7 @@ bookcontroller.route('/:id')
       values: [name, snippet, deweyDecimal, review, req.user.id, req.params.id]
     };
     console.log(req.user.id, req.params.id)
-    client.query(query, (err, res) => {
+    pool.query(query, (err, res) => {
       if (err) {
         rejected(err)
       } else {
@@ -150,7 +150,7 @@ bookcontroller.route('/:id')
       values: [req.params.id, req.user.id]
     }
 
-  client.query(query, (err, res) => {
+  pool.query(query, (err, res) => {
     console.log(res)
     return err  ?  rejected() : res.rowCount > 0 ? resolved() : rejected()
   })

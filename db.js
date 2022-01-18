@@ -1,13 +1,13 @@
 const { Pool } = require('pg')
-const config = {
-  connectionString: `postgresql://postgres:${process.env.PASS}@localhost:5432/mydb`,
-}
+
+
+const connectionString = `postgresql://postgres:${process.env.PASS}@localhost:5432/mydb`,
 
 // Pooling allows for a reusable 'pool' of clients to be checked out, used and returned in less time
-const client = new Pool(config)
+const pool = new Pool({connectionString})
 
 
-module.exports = { client }
+module.exports = { pool }
 
 
 // At the bottom is ssl configuration
