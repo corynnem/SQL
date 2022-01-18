@@ -16,7 +16,7 @@ const User = () => {
 const Book = () => {
 
   pool.query(
-    "CREATE TABLE IF NOT EXISTS books (id integer NOT NULL UNIQUE, name varchar(255), snippet varchar(1000), deweyDecimal varchar(255) NOT NULL UNIQUE, review varchar(255), userId integer, FOREIGN KEY (userId) REFERENCES users(id));",
+    "CREATE TABLE IF NOT EXISTS books (id integer NOT NULL UNIQUE, name varchar(255), snippet varchar(1000), deweyDecimal varchar(255) NOT NULL UNIQUE, review varchar(255), userid integer);",
     (err, res) => {
       if (err) {
         console.log(err.stack);
@@ -27,6 +27,9 @@ const Book = () => {
   );
 };
 
+
+
+pool.query
 
 // const queries = ['DROP TABLE users', 'DROP TABLE books']
 // pool.query(queries[1])
