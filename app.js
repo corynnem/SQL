@@ -5,6 +5,7 @@ const cors = require('./middlewares/cors')
 const { users, books } = require('./controllers');
 
 
+
 app.use(Express.json())
 app.use(cors)
 
@@ -16,5 +17,6 @@ app.use("/static", Express.static("node_modules"));
 
 app.listen(process.env.PORT, () => {  
     console.log(`app listening on ${process.env.PORT}`)
+    
 
 });
