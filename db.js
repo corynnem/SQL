@@ -7,11 +7,11 @@ var parse = require('pg-connection-string').parse;
 
 // Pooling allows for a reusable 'pool' of clients to be checked out, used and returned in less time
 const pool = new Pool({
-  user: 'postgres',
-  host: 'localhost',
-  database: 'mydb',
-  password: 'CmoodY98!59',
-  port: 5432,
+  user: process.env.PGUSER,
+  host: process.env.PGHOST,
+  database: process.env.PGDATABASE,
+  password: process.env.PGPASSWORD,
+  port: process.env.PGPORT,
 })
 
 
