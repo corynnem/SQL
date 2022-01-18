@@ -4,7 +4,7 @@ const { Pool } = require('pg')
 const connectionString = `postgresql://postgres:${process.env.PASS}@localhost:5432/mydb`
 
 // Pooling allows for a reusable 'pool' of clients to be checked out, used and returned in less time
-const pool = new Pool({connectionString})
+const pool = new Pool({connectionString, ssl: {rejectUnauthorized: false}})
 
 
 module.exports = { pool }
