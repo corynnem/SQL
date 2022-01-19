@@ -1,5 +1,9 @@
 const { pool } = require("../db");
 
+
+
+
+
 const User = () => {
   pool.query(
     "CREATE TABLE IF NOT EXISTS users (id integer NOT NULL UNIQUE, firstName varchar(255), lastName varchar(255), email varchar(255) NOT NULL UNIQUE, password varchar(255), PRIMARY KEY(id));",

@@ -6,7 +6,64 @@ const jwt = require("jsonwebtoken");
 const usercontroller = new Router();
 const { User } = require('../tables/tables')
 
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     User:
+ *       type: object
+ *       required:
+ *          - firstName
+ *          - lastName
+ *          - email
+ *          - password
+ *       properties:
+ *         id:
+ *           type: integer
+ *           description: The auto-generated id of a new User
+ *         firstName:
+ *           type: string
+ *           description: The User's first name
+ *         lastName:
+ *           type: string
+ *           description: The User's last name
+ *         email:
+ *           type: string
+ *           description: The User's email
+ *         password:
+ *           type: string
+ *           description: The User's chosen password
+ *       example:
+ *         id: 1
+ *         email: email@gmail.com
+ *         firstName: Jane
+ *         lastName: Doe
+ *         password: password123
+ */
+
 User()
+
+
+
+/**
+ * @swagger
+ * /user/register:
+ *   post:
+ *     summary: Register a user and returns a message of "register success" 
+ *     tags: [User]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/User'
+ *     responses:
+ *       200:
+ *         description: "user registered"
+ *       401:
+ *         description: error message specified by pg
+ */
 
 usercontroller.post("/register", async (req, res) => {
   const { firstName, lastName, email, password } = req.body;
@@ -53,6 +110,27 @@ usercontroller.post("/register", async (req, res) => {
     rejected(err);
   }
 });
+
+
+
+/**
+ * @swagger
+ * /user/login:
+ *   post:
+ *     summary: Log in a user and returns a message of "login success" 
+ *     tags: [User]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/User'
+ *     responses:
+ *       200:
+ *         description: "login success"
+ *       401:
+ *         description: 'login failed'
+ */
 
 usercontroller.post("/login", async (req, res) => {
   const { email, password } = req.body;
