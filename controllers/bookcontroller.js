@@ -144,9 +144,9 @@ const { Book } = require('../tables/tables')
   *       - UserAuth: []
   *     responses:
   *       200:
-  *         description: "data retrieved successfully"
+  *         description: "book details updated"
   *       401: 
-  *         description: "no books found"
+  *         description: "book not found or could not be updated"
   * 
  */
  
@@ -161,9 +161,9 @@ const { Book } = require('../tables/tables')
   *       - UserAuth: []
   *     responses:
   *       200:
-  *         description: "data retrieved successfully"
+  *         description: "book deleted"
   *       401: 
-  *         description: "no books found"
+  *         description: "book could not be deleted"
   * 
  */
  bookcontroller.route('/:id')
