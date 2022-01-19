@@ -7,7 +7,9 @@ const { Book } = require('../tables/tables')
 
 
 Book()
-pool.query('ALTER TABLE books ADD FOREIGN KEY (userId) REFERENCES users(id)', (err, res) => err ? console.log(err): console.log('ALTER TABLE users ADD FOREIGN KEY (userId) REFERENCES users(id)') )
+setTimeout(() => {
+  pool.query('ALTER TABLE books ADD FOREIGN KEY (userId) REFERENCES users(id)', (err, res) => err ? console.log(err): console.log('ALTER TABLE users ADD FOREIGN KEY (userId) REFERENCES users(id)') )
+}, 500)
 
 
 bookcontroller.post("/new-book", validate,  async (req, res) => {
