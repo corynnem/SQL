@@ -118,7 +118,7 @@ usercontroller.post("/register", async (req, res) => {
  * @swagger
  * /users/login:
  *   post:
- *     summary: Log in a user and returns a message of "login success" 
+ *     summary: Log in a user and returns a message of "login success" and token to allow access to authenticated routes
  *     tags: [User]
  *     requestBody:
  *       required: true
