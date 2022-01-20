@@ -81,6 +81,7 @@ usercontroller.post("/register", async (req, res) => {
 
   try {
     pool.query("SELECT id FROM users", (err, res) => {
+      console.log(err, res)
       if (err) {
         console.log(err);
       } else {
