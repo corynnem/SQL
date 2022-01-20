@@ -66,6 +66,7 @@ User()
  */
 
 usercontroller.post("/register", async (req, res) => {
+  console.log(req, res)
   const { firstName, lastName, email, password } = req.body;
 
   const resolved = () => {
@@ -81,7 +82,6 @@ usercontroller.post("/register", async (req, res) => {
 
   try {
     pool.query("SELECT id FROM users", (err, res) => {
-      console.log(err, res)
       if (err) {
         console.log(err);
       } else {
