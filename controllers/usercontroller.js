@@ -48,7 +48,7 @@ User()
 
 /**
  * @swagger
- * /user/register:
+ * /users/register:
  *   post:
  *     summary: Register a user and returns a message of "register success" 
  *     tags: [User]
@@ -116,7 +116,7 @@ usercontroller.post("/register", async (req, res) => {
 
 /**
  * @swagger
- * /user/login:
+ * /users/login:
  *   post:
  *     summary: Log in a user and returns a message of "login success" 
  *     tags: [User]
